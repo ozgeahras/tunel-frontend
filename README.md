@@ -230,4 +230,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Made with ❤️ for the Turkish tech community in Europe**
 
-*Tunel - Your bridge to European opportunities*
+*Tunel - Your bridge to European opportunities*# Deploy fix
