@@ -1,0 +1,8 @@
+/jobs/:path* /jobs/:path* 200
+/companies/:path* /companies/:path* 200
+/germany/:path* /germany/:path* 200
+/netherlands/:path* /netherlands/:path* 200
+/malta/:path* /malta/:path* 200
+
+# Fallback for SPA routing
+/* /index.html 200
