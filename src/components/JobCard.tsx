@@ -27,7 +27,7 @@ export default function JobCard({ job, onApply }: JobCardProps) {
   const currentTranslation = job.translations[language];
 
   return (
-    <div className="group bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 p-8 border border-white/50 hover:-translate-y-1 hover:rotate-1 relative overflow-hidden">
+    <div className="group bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-white/50 hover:-translate-y-1 relative overflow-hidden">
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       

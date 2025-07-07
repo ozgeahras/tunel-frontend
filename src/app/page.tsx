@@ -77,17 +77,17 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-br from-slate-50 to-indigo-100/60">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1">
+            <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-3xl shadow-lg border border-white/80 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">500+</div>
               <div className="text-gray-900 font-bold text-xl">{t.home.stats.jobs}</div>
               <div className="text-gray-600 text-sm mt-2">Active opportunities waiting</div>
             </div>
-            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1" style={{animationDelay: '0.1s'}}>
+            <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-3xl shadow-lg border border-white/80 hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style={{animationDelay: '0.1s'}}>
               <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">50+</div>
               <div className="text-gray-900 font-bold text-xl">{t.home.stats.companies}</div>
               <div className="text-gray-600 text-sm mt-2">Top European employers</div>
             </div>
-            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1" style={{animationDelay: '0.2s'}}>
+            <div className="group bg-white/95 backdrop-blur-sm p-10 rounded-3xl shadow-lg border border-white/80 hover:shadow-xl transition-all duration-300 hover:-translate-y-1" style={{animationDelay: '0.2s'}}>
               <div className="text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">15+</div>
               <div className="text-gray-900 font-bold text-xl">{t.home.stats.countries}</div>
               <div className="text-gray-600 text-sm mt-2">Countries offering visas</div>

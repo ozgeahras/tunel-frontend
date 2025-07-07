@@ -28,7 +28,7 @@ export default function MaltaPage() {
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Gaming & iGaming */}
-          <div className="group bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1">
+          <div className="group bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="text-4xl mb-4">🎰</div>
             <h3 className="text-3xl font-bold text-gray-900 mb-4 group-hover:text-yellow-600 transition-colors">Gaming & iGaming</h3>
             <p className="text-gray-800 mb-6 text-lg leading-relaxed">
