@@ -13,56 +13,84 @@ export default function Home() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 to-indigo-800 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            {t.home.title}
-          </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            {t.home.subtitle}
-          </p>
+      <section className="relative bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-800 text-white py-24 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-white rounded-full animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-20 h-20 bg-white rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
+          <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-white rounded-full animate-ping" style={{animationDelay: '2s'}}></div>
+          <div className="absolute bottom-32 right-1/3 w-24 h-24 bg-white rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="animate-fade-in-up">
+            <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight">
+              <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                {t.home.title}
+              </span>
+            </h1>
+            <p className="text-xl md:text-2xl mb-12 max-w-3xl mx-auto text-blue-100 font-light leading-relaxed">
+              {t.home.subtitle}
+            </p>
+          </div>
           
-          {/* Search Bar */}
-          <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-4 flex flex-col md:flex-row gap-4">
+          {/* Enhanced Search Bar */}
+          <div className="max-w-5xl mx-auto bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl p-6 flex flex-col md:flex-row gap-4 border border-white/20 animate-fade-in-up" style={{animationDelay: '0.3s'}}>
             <div className="flex-1">
-              <input
-                type="text"
-                placeholder={t.home.searchPlaceholder}
-                className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder={t.home.searchPlaceholder}
+                  className="w-full px-6 py-4 text-gray-800 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg bg-white/90"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+                  <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </div>
+              </div>
             </div>
             <div className="flex-1">
-              <select className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <select className="w-full px-6 py-4 text-gray-800 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 text-lg bg-white/90">
                 <option>{t.home.allCountries}</option>
-                <option>Almanya</option>
-                <option>Hollanda</option>
-                <option>İngiltere</option>
-                <option>Fransa</option>
-                <option>İsviçre</option>
+                <option>🇩🇪 Germany</option>
+                <option>🇳🇱 Netherlands</option>
+                <option>🇬🇧 United Kingdom</option>
+                <option>🇫🇷 France</option>
+                <option>🇨🇭 Switzerland</option>
+                <option>🇲🇹 Malta</option>
               </select>
             </div>
-            <button className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-              {t.home.searchButton}
+            <button className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+              <span className="flex items-center justify-center gap-2">
+                {t.home.searchButton}
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+              </span>
             </button>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-50 to-indigo-50/30">
+      <section className="py-20 bg-gradient-to-br from-slate-50 to-indigo-100/60">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">500+</div>
-              <div className="text-gray-900 font-semibold text-lg">{t.home.stats.jobs}</div>
+            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1">
+              <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">500+</div>
+              <div className="text-gray-900 font-bold text-xl">{t.home.stats.jobs}</div>
+              <div className="text-gray-600 text-sm mt-2">Active opportunities waiting</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">50+</div>
-              <div className="text-gray-900 font-semibold text-lg">{t.home.stats.companies}</div>
+            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1" style={{animationDelay: '0.1s'}}>
+              <div className="text-5xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">50+</div>
+              <div className="text-gray-900 font-bold text-xl">{t.home.stats.companies}</div>
+              <div className="text-gray-600 text-sm mt-2">Top European employers</div>
             </div>
-            <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-white/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-3">15+</div>
-              <div className="text-gray-900 font-semibold text-lg">{t.home.stats.countries}</div>
+            <div className="group bg-white/90 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-white/80 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:rotate-1" style={{animationDelay: '0.2s'}}>
+              <div className="text-5xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-4 group-hover:scale-110 transition-transform duration-300">15+</div>
+              <div className="text-gray-900 font-bold text-xl">{t.home.stats.countries}</div>
+              <div className="text-gray-600 text-sm mt-2">Countries offering visas</div>
             </div>
           </div>
         </div>
