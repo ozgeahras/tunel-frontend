@@ -32,6 +32,12 @@ function JobsContent() {
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
 
+  // Debug wrapper for jobs page
+  const handleJobsSearchChange = (value: string) => {
+    console.log('Jobs page - onChange called with:', value);
+    setSearchQuery(value);
+  };
+
   useEffect(() => {
     setLoading(true);
     
@@ -126,7 +132,7 @@ function JobsContent() {
               <div className="flex-1">
                 <SearchDropdown
                   value={searchQuery}
-                  onChange={setSearchQuery}
+                  onChange={handleJobsSearchChange}
                   placeholder={t.jobs.searchPlaceholder}
                   suggestions={jobSuggestions}
                   className="w-full px-4 py-3 border border-[var(--border-color)] bg-[var(--background)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 placeholder-[var(--text-muted)] transition-all"

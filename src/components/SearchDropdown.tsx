@@ -90,6 +90,7 @@ export default function SearchDropdown({
   // Handle dropdown visibility in input handlers instead of useEffect
 
   const handleSelect = (suggestion: string) => {
+    console.log('SearchDropdown - handleSelect called with:', suggestion);
     onChange(suggestion);
     setIsOpen(false);
     setHighlightedIndex(-1);
