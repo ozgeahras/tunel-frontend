@@ -24,6 +24,9 @@ export default function SearchDropdown({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Debug log to check if component renders
+  console.log('SearchDropdown render - props:', { value, suggestions: suggestions.length, placeholder });
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -113,6 +116,7 @@ export default function SearchDropdown({
         placeholder={placeholder}
         className={className}
         autoComplete="off"
+        data-component="SearchDropdown"
       />
       
       {isOpen && suggestions.length > 0 && (
