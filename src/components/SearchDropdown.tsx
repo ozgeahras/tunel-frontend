@@ -87,18 +87,25 @@ export default function SearchDropdown({
     }
   };
 
-  // Handle dropdown visibility in input handlers instead of useEffect
+  // Sync input value with prop value to fix controlled component issues
+  useEffect(() => {
+    if (inputRef.current && inputRef.current.value !== value) {
+      inputRef.current.value = value;
+      console.log('SearchDropdown - syncing input value to:', value);
+    }
+  }, [value]);
 
   const handleSelect = (suggestion: string) => {
     console.log('SearchDropdown - handleSelect called with:', suggestion);
-    onChange(suggestion);
+    
+    // Close dropdown first to prevent interference
     setIsOpen(false);
     setHighlightedIndex(-1);
     
-    // Force update the input value immediately
-    if (inputRef.current) {
-      inputRef.current.value = suggestion;
-    }
+    // Update state after a micro-delay to ensure proper React reconciliation
+    setTimeout(() => {
+      onChange(suggestion);
+    }, 0);
     
     inputRef.current?.blur();
   };
