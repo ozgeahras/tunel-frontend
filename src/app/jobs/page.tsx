@@ -88,7 +88,7 @@ export default function JobsPage() {
     // Search is handled by useEffect
   };
 
-  // Initialize values from URL params and handle country translations
+  // Initialize values from URL params - only run when searchParams change
   useEffect(() => {
     // Get search query from URL
     const urlQuery = searchParams.get('q');
@@ -96,14 +96,21 @@ export default function JobsPage() {
       setSearchQuery(urlQuery);
     }
 
-    // Get country from URL
+    // Get country from URL  
     const urlCountry = searchParams.get('country');
     if (urlCountry && countries.some(c => c.key === urlCountry)) {
       setSelectedCountry(urlCountry);
-    } else if (!selectedCountry && countries.length > 0) {
+    } else if (countries.length > 0) {
       setSelectedCountry(countries[0].key); // Use 'all' key as default
     }
-  }, [searchParams, countries, selectedCountry]);
+  }, [searchParams, countries]); // Only searchParams and countries (not state values)
+
+  // Separate effect for handling countries when they change (language switch)
+  useEffect(() => {
+    if (countries.length > 0 && !selectedCountry) {
+      setSelectedCountry(countries[0].key);
+    }
+  }, [countries]); // Only depend on countries, not selectedCountry
 
   return (
     <div className="bg-[var(--background)] min-h-screen transition-colors">
