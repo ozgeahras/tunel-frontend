@@ -8,8 +8,9 @@
     "export": "next build",
     "start": "next start",
     "serve": "npx serve out",
-    "preview": "pnpm build && npx serve out",
-    "lint": "next lint"
+    "preview": "npm run build && npx serve out",
+    "lint": "next lint",
+    "cf-build": "npm install && npm run build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",

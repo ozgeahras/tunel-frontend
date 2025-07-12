@@ -6,10 +6,10 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   distDir: 'out',
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   images: {
     unoptimized: true,

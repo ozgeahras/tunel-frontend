@@ -1,0 +1,9 @@
+# Cloudflare Pages configuration
+name = "tunel-frontend"
+
+[build]
+command = "npm install && npm run build"
+publish = "out"
+
+[build.environment]
+NODE_VERSION = "18"
