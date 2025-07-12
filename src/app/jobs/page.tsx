@@ -1,15 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import JobCard from '@/components/JobCard';
-import { Job, mockJobs, searchJobs, EU_COUNTRIES } from '@/lib/mockData';
+import { Job, mockJobs, searchJobs } from '@/lib/mockData';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import LoginModal from '@/components/auth/LoginModal';
+import SearchDropdown from '@/components/SearchDropdown';
+import { searchJobTitles } from '@/lib/job-titles-data';
 
 export default function JobsPage() {
-  const { t } = useLanguage();
+  const { t, language, getCountryList } = useLanguage();
   const { user } = useAuth();
+  const searchParams = useSearchParams();
+  
+  // Get country list for current language
+  const countries = getCountryList();
   const [jobs, setJobs] = useState<Job[]>(mockJobs);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -22,13 +29,17 @@ export default function JobsPage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [sortBy, setSortBy] = useState('latest');
 
+  // Get job title suggestions based on search query
+  const jobSuggestions = searchJobTitles(searchQuery, language);
+
   useEffect(() => {
     setLoading(true);
     
     // Simulate API call delay
     const timer = setTimeout(() => {
-      const searchCountry = selectedCountry === t.home.allCountries ? 'Tüm Ülkeler' : selectedCountry;
-      let filteredJobs = searchJobs(searchQuery, searchCountry);
+      // Find selected country name for search
+      const selectedCountryName = countries.find(c => c.key === selectedCountry)?.name || '';
+      let filteredJobs = searchJobs(searchQuery, selectedCountryName === countries[0]?.name ? 'Tüm Ülkeler' : selectedCountryName);
       
       // Apply additional filters
       if (selectedExperience) {
@@ -70,21 +81,29 @@ export default function JobsPage() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchQuery, selectedCountry, selectedExperience, selectedType, salaryMin, remoteOnly, visaSponsorshipOnly, sortBy, t.home.allCountries]);
+  }, [searchQuery, selectedCountry, selectedExperience, selectedType, salaryMin, remoteOnly, visaSponsorshipOnly, sortBy, countries]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     // Search is handled by useEffect
   };
 
-  const countries = [t.home.allCountries, ...EU_COUNTRIES];
-  
-  // Initialize selectedCountry with translated value
+  // Initialize values from URL params and handle country translations
   useEffect(() => {
-    if (!selectedCountry) {
-      setSelectedCountry(t.home.allCountries);
+    // Get search query from URL
+    const urlQuery = searchParams.get('q');
+    if (urlQuery) {
+      setSearchQuery(urlQuery);
     }
-  }, [t.home.allCountries, selectedCountry]);
+
+    // Get country from URL
+    const urlCountry = searchParams.get('country');
+    if (urlCountry && countries.some(c => c.key === urlCountry)) {
+      setSelectedCountry(urlCountry);
+    } else if (!selectedCountry && countries.length > 0) {
+      setSelectedCountry(countries[0].key); // Use 'all' key as default
+    }
+  }, [searchParams, countries, selectedCountry]);
 
   return (
     <div className="bg-[var(--background)] min-h-screen transition-colors">
@@ -103,11 +122,11 @@ export default function JobsPage() {
             {/* Main search bar */}
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
-                <input
-                  type="text"
-                  placeholder={t.jobs.searchPlaceholder}
+                <SearchDropdown
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={setSearchQuery}
+                  placeholder={t.jobs.searchPlaceholder}
+                  suggestions={jobSuggestions}
                   className="w-full px-4 py-3 border border-[var(--border-color)] bg-[var(--background)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 placeholder-[var(--text-muted)] transition-all"
                 />
               </div>
@@ -115,11 +134,11 @@ export default function JobsPage() {
                 <select
                   value={selectedCountry}
                   onChange={(e) => setSelectedCountry(e.target.value)}
-                  className="w-full px-4 py-3 border border-[var(--border-color)] bg-[var(--background)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 placeholder-[var(--text-muted)] transition-all"
+                  className="w-full px-4 py-3 border border-[var(--border-color)] bg-[var(--background)] text-[var(--text-primary)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 transition-all"
                 >
                   {countries.map(country => (
-                    <option key={country} value={country}>
-                      {country}
+                    <option key={country.key} value={country.key}>
+                      {country.name}
                     </option>
                   ))}
                 </select>
@@ -218,7 +237,7 @@ export default function JobsPage() {
         <div className="mb-6">
           <p className="text-gray-600 dark:text-gray-300">
             {loading ? t.jobs.searching : `${jobs.length} ${t.jobs.resultsFound}`}
-            {selectedCountry !== t.home.allCountries && ` (${selectedCountry})`}
+            {selectedCountry !== countries[0]?.key && ` (${countries.find(c => c.key === selectedCountry)?.name})`}
             {searchQuery && ` - "${searchQuery}" için`}
           </p>
         </div>
@@ -260,7 +279,7 @@ export default function JobsPage() {
                 <button 
                   onClick={() => {
                     setSearchQuery('');
-                    setSelectedCountry(t.home.allCountries);
+                    setSelectedCountry(countries[0]?.key || '');
                     setSelectedExperience('');
                     setSelectedType('');
                     setSalaryMin('');

@@ -1,15 +1,41 @@
 'use client';
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
 import LoginModal from "@/components/auth/LoginModal";
+import SearchDropdown from "@/components/SearchDropdown";
+import { searchJobTitles } from "@/lib/job-titles-data";
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language, getCountryList } = useLanguage();
   const { user } = useAuth();
+  const router = useRouter();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('');
+
+  // Get country list for current language
+  const countries = getCountryList();
+  
+  // Get job title suggestions based on search query
+  const jobSuggestions = searchJobTitles(searchQuery, language);
+
+  // Handle search form submission
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery.trim()) {
+      params.set('q', searchQuery.trim());
+    }
+    if (selectedCountry && selectedCountry !== countries[0]?.key) {
+      params.set('country', selectedCountry);
+    }
+    
+    const queryString = params.toString();
+    router.push(`/jobs${queryString ? `?${queryString}` : ''}`);
+  };
   return (
     <div className="bg-[var(--background)] transition-colors">
       {/* Hero Section */}
@@ -23,28 +49,34 @@ export default function Home() {
           </p>
           
           {/* Search Bar */}
-          <div className="max-w-4xl mx-auto bg-[var(--surface)] rounded-lg border border-[var(--border-color)] p-6 flex flex-col md:flex-row gap-4">
+          <form onSubmit={(e) => { e.preventDefault(); handleSearch(); }} className="max-w-4xl mx-auto bg-[var(--surface)] rounded-lg border border-[var(--border-color)] p-6 flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <input
-                type="text"
+              <SearchDropdown
+                value={searchQuery}
+                onChange={setSearchQuery}
                 placeholder={t.home.searchPlaceholder}
+                suggestions={jobSuggestions}
                 className="w-full px-4 py-3 text-[var(--text-primary)] bg-[var(--background)] border border-[var(--border-color)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 placeholder-[var(--text-muted)] transition-all"
+                onEnterSubmit={handleSearch}
               />
             </div>
             <div className="flex-1">
-              <select className="w-full px-4 py-3 text-[var(--text-primary)] bg-[var(--background)] border border-[var(--border-color)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 transition-all">
-                <option>{t.home.allCountries}</option>
-                <option>Almanya</option>
-                <option>Hollanda</option>
-                <option>İngiltere</option>
-                <option>Fransa</option>
-                <option>İsviçre</option>
+              <select 
+                value={selectedCountry}
+                onChange={(e) => setSelectedCountry(e.target.value)}
+                className="w-full px-4 py-3 text-[var(--text-primary)] bg-[var(--background)] border border-[var(--border-color)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 transition-all"
+              >
+                {countries.map(country => (
+                  <option key={country.key} value={country.key}>
+                    {country.name}
+                  </option>
+                ))}
               </select>
             </div>
-            <button className="bg-[var(--primary)] text-[var(--background)] px-8 py-3 rounded-lg hover:bg-[var(--primary-hover)] transition-all font-medium border border-[var(--primary)] hover:border-[var(--primary-hover)]">
+            <button type="submit" className="bg-[var(--primary)] text-[var(--background)] px-8 py-3 rounded-lg hover:bg-[var(--primary-hover)] transition-all font-medium border border-[var(--primary)] hover:border-[var(--primary-hover)]">
               {t.home.searchButton}
             </button>
-          </div>
+          </form>
         </div>
       </section>
 
