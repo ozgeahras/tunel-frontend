@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import JobCard from '@/components/JobCard';
 import { Job, mockJobs, searchJobs } from '@/lib/mockData';
@@ -10,7 +10,7 @@ import LoginModal from '@/components/auth/LoginModal';
 import SearchDropdown from '@/components/SearchDropdown';
 import { searchJobTitles } from '@/lib/job-titles-data';
 
-export default function JobsPage() {
+function JobsContent() {
   const { t, language, getCountryList } = useLanguage();
   const { user } = useAuth();
   const searchParams = useSearchParams();
@@ -309,5 +309,32 @@ export default function JobsPage() {
         />
       </div>
     </div>
+  );
+}
+
+// Loading component for Suspense fallback
+function JobsLoading() {
+  return (
+    <div className="bg-[var(--background)] min-h-screen transition-colors">
+      <div className="container mx-auto px-4 py-8">
+        <div className="animate-pulse">
+          <div className="h-8 bg-[var(--surface)] rounded w-64 mb-4"></div>
+          <div className="h-4 bg-[var(--surface)] rounded w-96 mb-8"></div>
+          <div className="bg-[var(--surface)] rounded-lg p-6 mb-8">
+            <div className="h-12 bg-[var(--background)] rounded mb-4"></div>
+            <div className="h-8 bg-[var(--background)] rounded w-32"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function JobsPage() {
+  return (
+    <Suspense fallback={<JobsLoading />}>
+      <JobsContent />
+    </Suspense>
   );
 }
