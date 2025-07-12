@@ -24,8 +24,7 @@ export default function SearchDropdown({
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Debug log to check if component renders
-  console.log('SearchDropdown render - props:', { value, suggestions: suggestions.length, placeholder });
+  // SearchDropdown component
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -78,9 +77,6 @@ export default function SearchDropdown({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
-    
-    // Debug log
-    console.log('SearchDropdown input:', newValue, 'suggestions:', suggestions.length);
   };
 
   // Handle dropdown visibility based on value and suggestions
@@ -90,7 +86,6 @@ export default function SearchDropdown({
     if (shouldOpen) {
       setHighlightedIndex(-1);
     }
-    console.log('SearchDropdown useEffect - value:', value, 'suggestions:', suggestions.length, 'isOpen:', shouldOpen);
   }, [value, suggestions.length]); // Only depend on length, not the array reference
 
   const handleSelect = (suggestion: string) => {

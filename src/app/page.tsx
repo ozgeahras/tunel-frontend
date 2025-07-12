@@ -17,9 +17,8 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
 
-  // Debug setSearchQuery wrapper
+  // Handle search query changes
   const handleSearchQueryChange = (value: string) => {
-    console.log('Homepage - setSearchQuery called with:', JSON.stringify(value));
     setSearchQuery(value);
   };
 
@@ -28,7 +27,6 @@ export default function Home() {
   
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
-  console.log('Homepage - searchQuery:', JSON.stringify(searchQuery), 'length:', searchQuery.length, 'jobSuggestions:', jobSuggestions);
 
   // Handle search form submission
   const handleSearch = () => {
