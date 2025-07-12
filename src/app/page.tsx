@@ -17,12 +17,18 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('');
 
+  // Debug setSearchQuery wrapper
+  const handleSearchQueryChange = (value: string) => {
+    console.log('Homepage - setSearchQuery called with:', JSON.stringify(value));
+    setSearchQuery(value);
+  };
+
   // Get country list for current language
   const countries = getCountryList();
   
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
-  console.log('Homepage - searchQuery:', searchQuery, 'jobSuggestions:', jobSuggestions);
+  console.log('Homepage - searchQuery:', JSON.stringify(searchQuery), 'length:', searchQuery.length, 'jobSuggestions:', jobSuggestions);
 
   // Handle search form submission
   const handleSearch = () => {
@@ -54,7 +60,7 @@ export default function Home() {
             <div className="flex-1">
               <SearchDropdown
                 value={searchQuery}
-                onChange={setSearchQuery}
+                onChange={handleSearchQueryChange}
                 placeholder={t.home.searchPlaceholder}
                 suggestions={jobSuggestions}
                 className="w-full px-4 py-3 text-[var(--text-primary)] bg-[var(--background)] border border-[var(--border-color)] rounded-lg focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20 placeholder-[var(--text-muted)] transition-all"
