@@ -110,7 +110,7 @@ export default function JobsPage() {
     if (countries.length > 0 && !selectedCountry) {
       setSelectedCountry(countries[0].key);
     }
-  }, [countries]); // Only depend on countries, not selectedCountry
+  }, [countries, selectedCountry]); // Include selectedCountry to satisfy ESLint
 
   return (
     <div className="bg-[var(--background)] min-h-screen transition-colors">

@@ -3,7 +3,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function MaltaPage() {
-  const { t } = useLanguage();
+  // const { t } = useLanguage(); // Temporarily disabled
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-blue-50">

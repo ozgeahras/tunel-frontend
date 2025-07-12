@@ -3,7 +3,7 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function NetherlandsPage() {
-  const { t } = useLanguage();
+  // const { t } = useLanguage(); // Temporarily disabled
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-blue-50">
