@@ -85,14 +85,13 @@ export default function SearchDropdown({
 
   // Handle dropdown visibility based on value and suggestions
   useEffect(() => {
-    if (value.length >= 2 && suggestions.length > 0) {
-      setIsOpen(true);
+    const shouldOpen = value.length >= 2 && suggestions.length > 0;
+    setIsOpen(shouldOpen);
+    if (shouldOpen) {
       setHighlightedIndex(-1);
-    } else {
-      setIsOpen(false);
     }
-    console.log('SearchDropdown useEffect - value:', value, 'suggestions:', suggestions.length, 'isOpen:', value.length >= 2 && suggestions.length > 0);
-  }, [value, suggestions]);
+    console.log('SearchDropdown useEffect - value:', value, 'suggestions:', suggestions.length, 'isOpen:', shouldOpen);
+  }, [value, suggestions.length]); // Only depend on length, not the array reference
 
   const handleSelect = (suggestion: string) => {
     onChange(suggestion);
