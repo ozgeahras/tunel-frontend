@@ -31,6 +31,7 @@ function JobsContent() {
 
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
+  console.log('Jobs page - searchQuery:', searchQuery, 'jobSuggestions:', jobSuggestions);
 
   useEffect(() => {
     setLoading(true);

@@ -76,6 +76,9 @@ export default function SearchDropdown({
     const newValue = e.target.value;
     onChange(newValue);
     
+    // Debug log
+    console.log('SearchDropdown input:', newValue, 'suggestions:', suggestions.length);
+    
     // Show dropdown if we have suggestions and user typed at least 2 characters
     if (newValue.length >= 2 && suggestions.length > 0) {
       setIsOpen(true);

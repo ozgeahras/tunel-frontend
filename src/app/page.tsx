@@ -22,6 +22,7 @@ export default function Home() {
   
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
+  console.log('Homepage - searchQuery:', searchQuery, 'jobSuggestions:', jobSuggestions);
 
   // Handle search form submission
   const handleSearch = () => {
