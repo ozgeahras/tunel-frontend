@@ -19,7 +19,6 @@ export default function Home() {
 
   // Handle search query changes
   const handleSearchQueryChange = (value: string) => {
-    console.log('Homepage - onChange called with:', value);
     setSearchQuery(value);
   };
 

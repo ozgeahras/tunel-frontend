@@ -87,26 +87,12 @@ export default function SearchDropdown({
     }
   };
 
-  // Sync input value with prop value to fix controlled component issues
-  useEffect(() => {
-    if (inputRef.current && inputRef.current.value !== value) {
-      inputRef.current.value = value;
-      console.log('SearchDropdown - syncing input value to:', value);
-    }
-  }, [value]);
 
   const handleSelect = (suggestion: string) => {
-    console.log('SearchDropdown - handleSelect called with:', suggestion);
-    
-    // Close dropdown first to prevent interference
+    // Close dropdown and update state immediately
     setIsOpen(false);
     setHighlightedIndex(-1);
-    
-    // Update state after a micro-delay to ensure proper React reconciliation
-    setTimeout(() => {
-      onChange(suggestion);
-    }, 0);
-    
+    onChange(suggestion);
     inputRef.current?.blur();
   };
 

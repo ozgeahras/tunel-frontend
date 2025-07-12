@@ -32,9 +32,7 @@ function JobsContent() {
   // Get job title suggestions based on search query
   const jobSuggestions = searchJobTitles(searchQuery, language);
 
-  // Debug wrapper for jobs page
   const handleJobsSearchChange = (value: string) => {
-    console.log('Jobs page - onChange called with:', value);
     setSearchQuery(value);
   };
 
