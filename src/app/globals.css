@@ -1,86 +1,114 @@
 @import "tailwindcss";
 
+/* 
+  New Color System:
+  - 3 Main Colors: Primary (#3b82f6 - soft blue), Secondary (#1e293b), Surface (#f8fafc)
+  - 2 Text Colors: Primary (#0f172a), Secondary (#64748b)
+  - Soft, consistent, high contrast
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Dark Theme (Default) - Soft, warm grays */
+  --background: #0f172a;
+  --surface: #1e293b;
+  --card-background: #334155;
+  --border-color: #475569;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  
+  /* Text Colors - Softer, less harsh */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  /* Form Elements */
+  --input-background: #334155;
+  --input-border: #475569;
+  --input-focus: #3b82f6;
+}
+
+.light {
+  /* Light Theme - Clean, soft tones */
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --card-background: #ffffff;
+  --border-color: #e2e8f0;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  
+  /* Text Colors */
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Form Elements */
+  --input-background: #ffffff;
+  --input-border: #e2e8f0;
+  --input-focus: #3b82f6;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-card-background: var(--card-background);
+  --color-border: var(--border-color);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-input-background: var(--input-background);
+  --color-input-border: var(--input-border);
+  --color-input-focus: var(--input-focus);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Custom Animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Form Element Styling */
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+input, select, textarea {
+  background-color: var(--input-background);
+  border-color: var(--input-border);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
 }
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
-  }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1);
+  outline: none;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
+/* Button Styling */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--background);
+  border: none;
+  transition: all 0.2s ease;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.btn-primary:hover {
+  background-color: var(--primary-hover);
 }
 
-.animate-glow {
-  animation: glow 2s ease-in-out infinite;
+/* Card Styling */
+.card {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
-/* Improved contrast for better accessibility */
-.text-gray-600 {
-  color: rgb(75 85 99) !important;
-}
-
-.text-gray-700 {
-  color: rgb(55 65 81) !important;
-}
-
-.text-gray-800 {
-  color: rgb(31 41 55) !important;
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+.card:hover {
+  border-color: var(--primary);
 }
