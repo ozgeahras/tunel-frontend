@@ -81,15 +81,18 @@ export default function SearchDropdown({
     
     // Debug log
     console.log('SearchDropdown input:', newValue, 'suggestions:', suggestions.length);
-    
-    // Show dropdown if we have suggestions and user typed at least 2 characters
-    if (newValue.length >= 2 && suggestions.length > 0) {
+  };
+
+  // Handle dropdown visibility based on value and suggestions
+  useEffect(() => {
+    if (value.length >= 2 && suggestions.length > 0) {
       setIsOpen(true);
       setHighlightedIndex(-1);
     } else {
       setIsOpen(false);
     }
-  };
+    console.log('SearchDropdown useEffect - value:', value, 'suggestions:', suggestions.length, 'isOpen:', value.length >= 2 && suggestions.length > 0);
+  }, [value, suggestions]);
 
   const handleSelect = (suggestion: string) => {
     onChange(suggestion);
