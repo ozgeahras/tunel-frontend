@@ -94,6 +94,12 @@ export default function SearchDropdown({
     onChange(suggestion);
     setIsOpen(false);
     setHighlightedIndex(-1);
+    
+    // Force update the input value immediately
+    if (inputRef.current) {
+      inputRef.current.value = suggestion;
+    }
+    
     inputRef.current?.blur();
   };
 
