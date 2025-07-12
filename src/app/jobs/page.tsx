@@ -105,12 +105,7 @@ function JobsContent() {
     }
   }, [searchParams, countries]); // Only searchParams and countries (not state values)
 
-  // Separate effect for handling countries when they change (language switch)
-  useEffect(() => {
-    if (countries.length > 0 && !selectedCountry) {
-      setSelectedCountry(countries[0].key);
-    }
-  }, [countries, selectedCountry]); // Include selectedCountry to satisfy ESLint
+  // No need for separate effect - first useEffect handles all cases
 
   return (
     <div className="bg-[var(--background)] min-h-screen transition-colors">
