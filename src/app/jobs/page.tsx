@@ -81,7 +81,7 @@ function JobsContent() {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [searchQuery, selectedCountry, selectedExperience, selectedType, salaryMin, remoteOnly, visaSponsorshipOnly, sortBy, countries]);
+  }, [searchQuery, selectedCountry, selectedExperience, selectedType, salaryMin, remoteOnly, visaSponsorshipOnly, sortBy]); // Remove countries from dependencies
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

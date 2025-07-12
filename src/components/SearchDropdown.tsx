@@ -77,16 +77,17 @@ export default function SearchDropdown({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
+    
+    // Simple immediate check without useEffect
+    if (newValue.length >= 2 && suggestions.length > 0) {
+      setIsOpen(true);
+      setHighlightedIndex(-1);
+    } else {
+      setIsOpen(false);
+    }
   };
 
-  // Handle dropdown visibility based on value and suggestions
-  useEffect(() => {
-    const shouldOpen = value.length >= 2 && suggestions.length > 0;
-    setIsOpen(shouldOpen);
-    if (shouldOpen) {
-      setHighlightedIndex(-1);
-    }
-  }, [value, suggestions.length]); // Only depend on length, not the array reference
+  // Handle dropdown visibility in input handlers instead of useEffect
 
   const handleSelect = (suggestion: string) => {
     onChange(suggestion);
@@ -96,6 +97,7 @@ export default function SearchDropdown({
   };
 
   const handleFocus = () => {
+    // Check current value and suggestions when focused
     if (value.length >= 2 && suggestions.length > 0) {
       setIsOpen(true);
     }
