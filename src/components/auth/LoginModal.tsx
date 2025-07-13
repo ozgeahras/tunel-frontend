@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth, UserType } from '@/contexts/AuthContext';
 import PasswordStrengthIndicator, { getPasswordStrength } from './PasswordStrengthIndicator';
 // import { useLanguage } from '@/contexts/LanguageContext';
@@ -9,12 +9,13 @@ interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultType?: UserType;
+  initialMode?: 'login' | 'register';
 }
 
-export default function LoginModal({ isOpen, onClose, defaultType = 'individual' }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, defaultType = 'individual', initialMode = 'login' }: LoginModalProps) {
   const { login, register, loading } = useAuth();
   // const { t } = useLanguage();
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [userType, setUserType] = useState<UserType>(defaultType);
   const [formData, setFormData] = useState({
     email: '',
@@ -25,6 +26,22 @@ export default function LoginModal({ isOpen, onClose, defaultType = 'individual'
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
+
+  // Reset form when modal opens/closes or initialMode changes
+  useEffect(() => {
+    if (isOpen) {
+      setIsLogin(initialMode === 'login');
+      setFormData({
+        email: '',
+        password: '',
+        name: '',
+        confirmPassword: ''
+      });
+      setError('');
+      setFieldErrors({});
+      setShowPasswordRequirements(false);
+    }
+  }, [isOpen, initialMode]);
 
   if (!isOpen) return null;
 

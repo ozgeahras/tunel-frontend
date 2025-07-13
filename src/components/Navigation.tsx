@@ -14,6 +14,7 @@ export default function Navigation() {
   const { user, logout } = useAuth();
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState<'login' | 'register'>('login');
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -171,13 +172,19 @@ export default function Navigation() {
             ) : (
               <>
                 <button
-                  onClick={() => setIsLoginModalOpen(true)}
+                  onClick={() => {
+                    setModalMode('login');
+                    setIsLoginModalOpen(true);
+                  }}
                   className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--primary)]"
                 >
                   {t.nav.login}
                 </button>
                 <button
-                  onClick={() => setIsLoginModalOpen(true)}
+                  onClick={() => {
+                    setModalMode('register');
+                    setIsLoginModalOpen(true);
+                  }}
                   className="bg-[var(--primary)] text-[var(--surface)] px-4 py-2 rounded-md text-sm font-medium hover:bg-[var(--primary-hover)] transition-colors"
                 >
                   {t.nav.register}
@@ -190,7 +197,8 @@ export default function Navigation() {
       
       <LoginModal 
         isOpen={isLoginModalOpen} 
-        onClose={() => setIsLoginModalOpen(false)} 
+        onClose={() => setIsLoginModalOpen(false)}
+        initialMode={modalMode}
       />
     </nav>
   );
