@@ -85,121 +85,50 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string, type: UserType) => {
     setLoading(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user data - in real app, this would come from API
-    const mockUser: AuthUser = type === 'individual' 
-      ? {
-          id: '1',
-          email,
-          name: 'Demo User',
-          type: 'individual',
-          profile: {
-            firstName: 'Demo',
-            lastName: 'User',
-            location: 'Istanbul, Turkey',
-            bio: 'Software Developer looking for opportunities in Europe',
-            linkedIn: 'linkedin.com/in/demouser',
-            github: 'github.com/demouser'
-          }
-        }
-      : type === 'company'
-      ? {
-          id: '1',
-          email,
-          name: 'Demo Company',
-          type: 'company',
-          profile: {
-            description: 'Leading tech company in Europe',
-            website: 'https://democompany.com',
-            industry: 'Technology',
-            size: '100-500',
-            location: 'Amsterdam, Netherlands',
-            culture: ['Remote Work', 'Work-Life Balance', 'Innovation'],
-            techStack: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
-            benefits: ['Visa Sponsorship', 'Health Insurance', 'Stock Options']
-          }
-        }
-      : {
-          id: '1',
-          email,
-          name: 'Demo Recruiter',
-          type: 'recruiter',
-          profile: {
-            firstName: 'Demo',
-            lastName: 'Recruiter',
-            company: 'TechTalent Agency',
-            location: 'Berlin, Germany',
-            bio: 'Experienced tech recruiter helping Turkish developers find opportunities in Europe',
-            linkedIn: 'linkedin.com/in/demorecruiter',
-            specialties: ['Frontend Development', 'Backend Development', 'DevOps'],
-            yearsOfExperience: 5,
-            languages: ['Turkish', 'English', 'German']
-          }
-        };
-
-    setUser(mockUser);
-    localStorage.setItem('tunel_user', JSON.stringify(mockUser));
-    setLoading(false);
+    try {
+      const { authAPI } = await import('@/lib/api');
+      const response = await authAPI.login({ email, password, type });
+      
+      if (response.success && response.data) {
+        const userData = response.data.user;
+        setUser(userData);
+        localStorage.setItem('tunel_user', JSON.stringify(userData));
+      } else {
+        throw new Error(response.error || 'Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const register = async (email: string, password: string, name: string, type: UserType) => {
     setLoading(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock user creation
-    const newUser: AuthUser = type === 'individual'
-      ? {
-          id: crypto.randomUUID(),
-          email,
-          name,
-          type: 'individual',
-          profile: {
-            firstName: name.split(' ')[0],
-            lastName: name.split(' ')[1] || '',
-            location: '',
-            bio: ''
-          }
-        }
-      : type === 'company'
-      ? {
-          id: crypto.randomUUID(),
-          email,
-          name,
-          type: 'company',
-          profile: {
-            description: '',
-            website: '',
-            industry: '',
-            size: '',
-            location: ''
-          }
-        }
-      : {
-          id: crypto.randomUUID(),
-          email,
-          name,
-          type: 'recruiter',
-          profile: {
-            firstName: name.split(' ')[0],
-            lastName: name.split(' ')[1] || '',
-            company: '',
-            location: '',
-            bio: '',
-            specialties: [],
-            languages: []
-          }
-        };
-
-    setUser(newUser);
-    localStorage.setItem('tunel_user', JSON.stringify(newUser));
-    setLoading(false);
+    try {
+      const { authAPI } = await import('@/lib/api');
+      const response = await authAPI.register({ email, password, name, type });
+      
+      if (response.success && response.data) {
+        const userData = response.data.user;
+        setUser(userData);
+        localStorage.setItem('tunel_user', JSON.stringify(userData));
+      } else {
+        throw new Error(response.error || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const { authAPI } = await import('@/lib/api');
+    await authAPI.logout();
     setUser(null);
     localStorage.removeItem('tunel_user');
   };

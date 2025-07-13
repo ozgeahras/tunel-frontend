@@ -10,15 +10,21 @@
     "serve": "npx serve out",
     "preview": "npm run build && npx serve out",
     "lint": "next lint",
-    "cf-build": "npm install && npm run build"
+    "cf-build": "npm install && npm run build",
+    "workers:dev": "wrangler dev workers/auth-api.ts",
+    "workers:deploy": "wrangler deploy workers/auth-api.ts",
+    "db:create": "wrangler d1 create tunel-db",
+    "db:migrate": "wrangler d1 execute tunel-db --file=workers/database-schema.sql"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.3",
+    "hono": "^4.6.11",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241218.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -28,6 +34,7 @@
     "eslint-config-next": "15.3.5",
     "sass": "^1.89.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.24.3"
   }
 }

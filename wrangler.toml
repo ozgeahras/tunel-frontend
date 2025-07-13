@@ -1,9 +1,14 @@
-# Cloudflare Pages configuration
-name = "tunel-frontend"
+# Cloudflare Workers configuration for Auth API
+name = "tunel-auth-api"
+main = "workers/auth-api.ts"
+compatibility_date = "2024-01-01"
 
-[build]
-command = "npm install && npm run build"
-publish = "out"
+# Environment variables
+[vars]
+JWT_SECRET = "tunel-jwt-secret-key-2024-production"
 
-[build.environment]
-NODE_VERSION = "18"
+# D1 Database binding (will be configured after database creation)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "tunel-db" 
+# database_id = "placeholder-will-be-updated"
