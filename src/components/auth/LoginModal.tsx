@@ -134,8 +134,11 @@ export default function LoginModal({ isOpen, onClose, defaultType = 'individual'
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-200">
-      <div className="bg-[var(--surface)] backdrop-blur-md rounded-xl shadow-2xl border border-[var(--border-color)] p-6 w-full max-w-md mx-4 animate-in slide-in-from-bottom-4 duration-300">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-200 p-4">
+      <div className="bg-[var(--surface)] backdrop-blur-md rounded-xl shadow-2xl border border-[var(--border-color)] p-6 w-full max-w-md max-h-[90vh] overflow-y-auto animate-in slide-in-from-bottom-4 duration-300" style={{
+        scrollbarWidth: 'thin',
+        scrollbarColor: 'var(--border-color) transparent'
+      }}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-[var(--text-primary)]">
             {isLogin ? 'Sign In' : 'Sign Up'}
@@ -190,7 +193,7 @@ export default function LoginModal({ isOpen, onClose, defaultType = 'individual'
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3">
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
@@ -277,7 +280,7 @@ export default function LoginModal({ isOpen, onClose, defaultType = 'individual'
             
             {/* Password Requirements Indicator for Registration */}
             {!isLogin && showPasswordRequirements && (
-              <div className="mt-3">
+              <div className="mt-2">
                 <PasswordStrengthIndicator password={formData.password} />
               </div>
             )}

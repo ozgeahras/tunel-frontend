@@ -82,7 +82,7 @@ export default function PasswordStrengthIndicator({ password, className = '' }: 
   if (!password) return null;
 
   return (
-    <div className={`space-y-3 ${className}`}>
+    <div className={`space-y-2 ${className}`}>
       {/* Strength Bar */}
       <div className="space-y-1">
         <div className="flex justify-between items-center">
@@ -96,7 +96,7 @@ export default function PasswordStrengthIndicator({ password, className = '' }: 
             {getStrengthText()}
           </span>
         </div>
-        <div className="w-full bg-[var(--input-border)] rounded-full h-2 overflow-hidden">
+        <div className="w-full bg-[var(--input-border)] rounded-full h-1.5 overflow-hidden">
           <div 
             className={`h-full transition-all duration-300 ${getStrengthColor()}`}
             style={{ width: `${percentage}%` }}
@@ -104,26 +104,26 @@ export default function PasswordStrengthIndicator({ password, className = '' }: 
         </div>
       </div>
 
-      {/* Requirements List */}
-      <div className="space-y-1">
+      {/* Requirements List - Compact 2-column layout */}
+      <div className="grid grid-cols-1 gap-1">
         {passwordRequirements.map((requirement) => {
           const isPassed = requirement.test(password);
           return (
             <div key={requirement.id} className="flex items-center space-x-2">
-              <div className={`w-4 h-4 rounded-full flex items-center justify-center ${
+              <div className={`w-3 h-3 rounded-full flex items-center justify-center flex-shrink-0 ${
                 isPassed 
                   ? 'bg-green-500 text-white' 
                   : 'bg-[var(--input-border)] text-[var(--text-muted)]'
               }`}>
                 {isPassed ? (
-                  <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-2 h-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 ) : (
-                  <div className="w-1.5 h-1.5 bg-current rounded-full" />
+                  <div className="w-1 h-1 bg-current rounded-full" />
                 )}
               </div>
-              <span className={`text-xs ${
+              <span className={`text-xs leading-tight ${
                 isPassed ? 'text-green-400' : 'text-[var(--text-muted)]'
               }`}>
                 {requirement.label}
