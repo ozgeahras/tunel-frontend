@@ -16,7 +16,7 @@ export interface Database {
           id: string;
           email: string;
           name: string;
-          type: 'individual' | 'company';
+          type: 'individual' | 'company' | 'recruiter';
           profile: Record<string, unknown>;
           created_at: string;
           updated_at: string;
@@ -25,7 +25,7 @@ export interface Database {
           id?: string;
           email: string;
           name: string;
-          type: 'individual' | 'company';
+          type: 'individual' | 'company' | 'recruiter';
           profile?: Record<string, unknown>;
           created_at?: string;
           updated_at?: string;
@@ -171,7 +171,7 @@ create table public.users (
   id uuid references auth.users on delete cascade not null primary key,
   email text unique not null,
   name text not null,
-  type text not null check (type in ('individual', 'company')),
+  type text not null check (type in ('individual', 'company', 'recruiter')),
   profile jsonb default '{}',
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null

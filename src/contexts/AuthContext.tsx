@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 
-export type UserType = 'individual' | 'company';
+export type UserType = 'individual' | 'company' | 'recruiter';
 
 export interface User {
   id: string;
@@ -38,7 +38,26 @@ export interface Company {
   };
 }
 
-export type AuthUser = User | Company;
+export interface Recruiter {
+  id: string;
+  email: string;
+  name: string;
+  type: 'recruiter';
+  profile?: {
+    firstName?: string;
+    lastName?: string;
+    company?: string;
+    location?: string;
+    bio?: string;
+    avatar?: string;
+    linkedIn?: string;
+    specialties?: string[]; // e.g., ['Frontend', 'Backend', 'DevOps']
+    yearsOfExperience?: number;
+    languages?: string[]; // Languages they can recruit in
+  };
+}
+
+export type AuthUser = User | Company | Recruiter;
 
 interface AuthContextType {
   user: AuthUser | null;
@@ -85,7 +104,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             github: 'github.com/demouser'
           }
         }
-      : {
+      : type === 'company'
+      ? {
           id: '1',
           email,
           name: 'Demo Company',
@@ -99,6 +119,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             culture: ['Remote Work', 'Work-Life Balance', 'Innovation'],
             techStack: ['React', 'Node.js', 'PostgreSQL', 'AWS'],
             benefits: ['Visa Sponsorship', 'Health Insurance', 'Stock Options']
+          }
+        }
+      : {
+          id: '1',
+          email,
+          name: 'Demo Recruiter',
+          type: 'recruiter',
+          profile: {
+            firstName: 'Demo',
+            lastName: 'Recruiter',
+            company: 'TechTalent Agency',
+            location: 'Berlin, Germany',
+            bio: 'Experienced tech recruiter helping Turkish developers find opportunities in Europe',
+            linkedIn: 'linkedin.com/in/demorecruiter',
+            specialties: ['Frontend Development', 'Backend Development', 'DevOps'],
+            yearsOfExperience: 5,
+            languages: ['Turkish', 'English', 'German']
           }
         };
 
@@ -127,7 +164,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             bio: ''
           }
         }
-      : {
+      : type === 'company'
+      ? {
           id: crypto.randomUUID(),
           email,
           name,
@@ -138,6 +176,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             industry: '',
             size: '',
             location: ''
+          }
+        }
+      : {
+          id: crypto.randomUUID(),
+          email,
+          name,
+          type: 'recruiter',
+          profile: {
+            firstName: name.split(' ')[0],
+            lastName: name.split(' ')[1] || '',
+            company: '',
+            location: '',
+            bio: '',
+            specialties: [],
+            languages: []
           }
         };
 
